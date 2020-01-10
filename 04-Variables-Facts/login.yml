@@ -1,0 +1,7 @@
+---
+- name: Collects the id of the current user
+  hosts: testserver
+  tasks:
+    - name: Capture output of id command
+      command: id -un
+      register: login

@@ -1,0 +1,8 @@
+---
+- name: Test timezone setting
+  hosts: all
+  tasks:
+    - name: Set timezone to America/New_York
+      shell: sudo -H -n /usr/bin/timedatectl set-timezone America/New_York
+      args:
+        warn: false

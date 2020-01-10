@@ -1,0 +1,17 @@
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "ubuntu/xenial64"
+  # Add a few test users
+  config.vm.provision :shell, privileged: true, :inline => "mkdir /users"
+  config.vm.provision :shell, privileged: true, :inline => "groupadd test"
+  config.vm.provision :shell, privileged: true, :inline => "useradd -d /users/test1 -g test -m -p $(openssl passwd -1 test1) test1"
+  config.vm.provision :shell, privileged: true, :inline => "useradd -d /users/test2 -g test -m -p $(openssl passwd -1 test2) test2"
+  # Limit test1 to 1 command
+  config.vm.provision :shell, privileged: true, :inline => "echo \"test1 ALL=(ALL) NOPASSWD: /usr/bin/timedatectl set-timezone\" * >> /etc/sudoers.d/test1"
+  # Don't limit test2
+  config.vm.provision :shell, privileged: true, :inline => "echo \"test2 ALL=(ALL) NOPASSWD: ALL\" >> /etc/sudoers.d/test2"
+  # Allow password authentication for ssh
+  config.vm.provision :shell, privileged: true, :inline => "sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config"
+  config.vm.provision :shell, privileged: true, :inline => "systemctl restart sshd"
+end

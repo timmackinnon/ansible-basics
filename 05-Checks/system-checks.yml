@@ -1,0 +1,62 @@
+---
+- name: System Checks
+  hosts: all
+  vars:
+      valid_os_name: Ubuntu
+      valid_os_arch: x86_64
+      valid_os_versions: ['14.04', '16.04']
+      root_filesystem_min_size: 10
+      valid_docker_version: 1.9.1
+  tasks:
+    - debug:
+        msg: "OS name is {{ ansible_distribution }}"
+
+    - name: Ensure OS is {{ valid_os_name }}
+      assert:
+        that: "ansible_distribution == valid_os_name"
+        msg: "OS is not valid - is {{ ansible_distribution }} but must be {{ valid_os_name }}"
+
+    - debug:
+        msg: "OS arch is {{ ansible_architecture }}"
+
+    - name: Ensure OS architecture is {{ valid_os_arch }}
+      assert:
+        that: "ansible_architecture == valid_os_arch"
+        msg: "OS architecture {{ ansible_architecture }} is not valid - must be {{ valid_os_arch }}"
+
+    - debug:
+        msg: "OS version is {{ ansible_distribution_version }}"
+
+    - name: Ensure OS version is one of {{ valid_os_versions }}
+      assert:
+        that: "ansible_distribution_version in valid_os_versions"
+        msg: "OS version {{ ansible_distribution_version }} is not valid - must be one of {{ valid_os_versions }}"
+
+    - name: Check disk space of root filesystem
+      shell: |
+        df -BG / | awk '/^[^Filesystem]/ {print $2}' | sed 's/G$//'
+      register: root_filesystem_size
+      changed_when: false
+
+    - debug:
+        msg: "/ is {{ root_filesystem_size.stdout }}G in size"
+
+    - name: Ensure root filesystem is at least {{ root_filesystem_min_size }}G
+      assert:
+        that: "root_filesystem_size.stdout | int >= root_filesystem_min_size"
+        msg: "/ is {{ root_filesystem_size.stdout }}G in size - fails minimum {{ root_filesystem_min_size }}G check"
+
+    - name: Install Docker
+      apt:
+        name: docker
+        update_cache: yes
+      become: true
+
+    - name: Check Docker version
+      shell: |
+        dpkg -s docker | grep Version | awk '{print $2}'
+      register: installed_docker_version
+    - name: Ensure docker version is {{ valid_docker_version }}
+      assert:
+        that: "installed_docker_version.stdout == valid_docker_version"
+        msg: "Docker {{ valid_docker_version }} is not installed. Installed version is {{ installed_docker_version.stdout }}"
