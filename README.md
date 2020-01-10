@@ -1,4 +1,4 @@
-# Ansible Primer
+# Ansible Basics 
 This repository holds some details around an introduction to __Ansible__ + some code examples. The bulk of this repository is based on the book `Ansible Up & Running` whose code examples live [here](https://github.com/ansiblebook/ansiblebook).
 
 # Setting up your environment
@@ -38,7 +38,7 @@ Ansible will then move to the next _task_ in the list of _tasks_ and repeat. It 
 * Ansible runs the _tasks_ in the order that you specify them
 
 # Why Ansible?
-Ansible's syntax is built on top of `YAML`, which is a data format language that was designed to be easy for humans to read and write. In a way, `YAML` is to `JSON` what `Markdown` is to `HTML`.
+Ansible's syntax is built on top of __YAML__, which is a data format language that was designed to be easy for humans to read and write. In a way, __YAML__ is to __JSON__ what __Markdown__ is to __HTML__.
 
 To manage a server with Ansible, the server needs only Python and SSH.
 
