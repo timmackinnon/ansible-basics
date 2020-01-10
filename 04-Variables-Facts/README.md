@@ -72,6 +72,7 @@ To view the contents of the registered variable, you can use the _debug_ module:
 - name: Capture output of id command
   command: id -un
   register: login
+
 - debug: var=login
 ```
 Running the `login.yml` and the `login-debug.yml` playbooks, you can see the following output:
@@ -129,6 +130,7 @@ Looking at the `JSON` output from the debug module, you can see:
 * _cmd_ key contains the invoked command
 * _rc_ key contains the return code from the executed command
 * _stderr_ key contains any text written to stderr
+* _stderr_lines_ contains any text written to stderr split by newlines
 * _stdout_ key contains any text writtent to stdout
 * *stdout_lines* contains any text written to stdout split by newlines
 

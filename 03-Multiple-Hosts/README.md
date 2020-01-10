@@ -1,4 +1,4 @@
-# Multiple Host Playbook Example
+# Multiple Hosts Playbook Example
 This is a simple playbook example for configuring and starting an `nginx` web server using Ansible on 3 hosts
 
 ## Set up a virtualenv and install ansible
@@ -50,7 +50,7 @@ Bringing machine 'vagrant3' up with 'virtualbox' provider...
 ==> vagrant3: Booting VM...
 ...
 ```
-NOTE:
+__NOTE:__
 * ports `80` and `443` (guest) are forwarded to ports `8080` and `8443` (host) respectively for VM 1
 * ports `80` and `443` (guest) are forwarded to ports `8081` and `8444` (host) respectively for VM 2
 * ports `80` and `443` (guest) are forwarded to ports `8082` and `8445` (host) respectively for VM 3
@@ -60,8 +60,8 @@ The contents of the `hosts` file are as follows:
 ```
 [webservers]
 testserver1 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222 ansible_python_interpreter=/usr/bin/python3
-testserver1 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2200 ansible_python_interpreter=/usr/bin/python3
-testserver1 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2201 ansible_python_interpreter=/usr/bin/python3
+testserver2 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2200 ansible_python_interpreter=/usr/bin/python3
+testserver3 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2201 ansible_python_interpreter=/usr/bin/python3
 ```
 
 A group called _[webservers]_ has been defined. This allows you to address a _host_ (testserver1) or a _group_ of _hosts_ when issuing commands:

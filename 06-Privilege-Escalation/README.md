@@ -67,7 +67,7 @@ NTP synchronized: no
  RTC in local TZ: no
 ```
 
-## Running a few plabooks as user _test1_ and _test2_
+## Running a few playbooks as user _test1_ and _test2_
 The `timezone_1.yml` playbook:
 ```
 ---

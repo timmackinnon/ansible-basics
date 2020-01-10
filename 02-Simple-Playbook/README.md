@@ -31,7 +31,7 @@ ansible 2.3.0.0
     default: 22 (guest) => 2222 (host) ...
 ...
 ```
-NOTE: ports `80` and `443` (guest) are forwarded to ports `8080` and `8443` (host) respectively
+__NOTE:__ ports `80` and `443` (guest) are forwarded to ports `8080` and `8443` (host) respectively
 
 ## Test connectivity with VM
 The contents of the `hosts` file are as follows:
